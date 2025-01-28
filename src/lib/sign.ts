@@ -1,11 +1,11 @@
 import forge from "node-forge";
 import { Base64 } from "js-base64";
 
-function b64UrltoB64(base64url: string): string {
+export function b64UrltoB64(base64url: string): string {
   return base64url.replace(/-/g, "+").replace(/_/g, "/");
 }
 
-function b64ToB64Url(base64: string): string {
+export function b64ToB64Url(base64: string): string {
   return base64.replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_");
 }
 
@@ -18,7 +18,7 @@ function signMessage(privateKey: string, message: string) {
   const pss = forge.pss.create({
     md: forge.md.sha256.create(),
     mgf: forge.mgf.mgf1.create(forge.md.sha256.create()),
-    saltLength: 20,
+    saltLength: md.digestLength,
   });
 
   const sign = key.sign(md, pss);
