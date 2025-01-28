@@ -41,10 +41,9 @@ function JwtInput(props: Props) {
   };
 
   const headerJson = JSON.stringify(header);
-  const payloadJson = JSON.stringify(payload);
 
-  const headerPrettyJson = JSON.stringify(header, undefined, 4);
   const payloadPrettyJson = JSON.stringify(payload, undefined, 4);
+  const headerPrettyJson = JSON.stringify(header, undefined, 4);
 
   const generate = () => {
     setJti(uuidv4());
@@ -53,8 +52,8 @@ function JwtInput(props: Props) {
 
   useEffect(() => {
     props.onChangeHeader(headerJson);
-    props.onChangePayload(payloadJson);
-  }, [headerJson, payloadJson]);
+    props.onChangePayload(payloadPrettyJson);
+  }, [headerJson, payloadPrettyJson]);
 
   const onClickRefreshButton: MouseEventHandler<HTMLButtonElement> = (_e) => {
     generate();
