@@ -26,7 +26,7 @@ function signMessage(privateKey: string, message: string) {
     saltLength: 20,
   });
 
-  const sign = key.sign(md);
+  const sign = key.sign(md, pss);
   return forge.util.encode64(sign)
 }
 
