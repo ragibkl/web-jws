@@ -10,25 +10,25 @@ import JwsInput from "./JwsInput";
 import JwtInput from "./JwtInput";
 import JwsSignHeaderInput from "./JwsSignHeaderInput";
 
+type Mode = "jws" | "jwt" | "jws_sign_header";
+
 function App() {
   const [privateKey, setPrivateKey] = useLocalStorage("privateKey", "");
   const [kid, setKid] = useLocalStorage("kid", "");
-  const [clientId, setClientId] = useLocalStorage("kid", "");
+  const [clientId, setClientId] = useLocalStorage("clientId", "");
+  const [mode, setMode] = useLocalStorage<Mode>("mode", "jws");
 
-  const [mode, setMode] = useLocalStorage<"jws" | "jwt" | "jws_sign_header">(
-    "mode",
-    "jws",
-  );
-
-  // JWS
   const [header, setHeader] = useState("");
   const [payload, setPayload] = useState("");
-
   const [signature, setSignature] = useState("");
 
   const sign = async () => {
     const jws = signJWS(privateKey, header, payload);
     setSignature(jws);
+  };
+
+  const onChangeClientId: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setClientId(e.target.value);
   };
 
   const onChangeKid: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -63,7 +63,15 @@ function App() {
 
       <h1>JWS Signing</h1>
 
-      <h2>Key Setup</h2>
+      <h2>Setup</h2>
+      <h3>Client ID:</h3>
+      <input
+        style={{ width: 400 }}
+        type="text"
+        value={clientId}
+        onChange={onChangeClientId}
+      />
+
       <h3>Key ID:</h3>
       <input
         style={{ width: 400 }}
@@ -115,13 +123,6 @@ function App() {
           onChangePayload={setPayload}
         />
       )}
-
-      {/* <h2>Key Setup</h2>
-      <h3>Header</h3>
-      <textarea rows={10} cols={100} value={header} onChange={onChangeHeader} />
-
-      <h3>Payload</h3>
-      <textarea rows={20} cols={100} value={payload} onChange={onChangePayload} /> */}
 
       <div style={{ width: 200 }}>
         <button onClick={onClickSignButton}>Sign</button>
