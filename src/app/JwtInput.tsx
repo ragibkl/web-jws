@@ -5,6 +5,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import { useLocalStorage } from "@uidotdev/usehooks";
 
 type Props = {
   kid: string;
@@ -18,7 +19,7 @@ function epochNow() {
 }
 
 function JwtInput(props: Props) {
-  const [aud, setAud] = useState("");
+  const [aud, setAud] = useLocalStorage("aud", "");
   const [jti, setJti] = useState(uuidv4());
   const [iat, setIat] = useState(epochNow());
   const exp = iat + 3600;
