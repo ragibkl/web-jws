@@ -18,9 +18,7 @@ function epochNow() {
 }
 
 function JwtInput(props: Props) {
-  const [aud, setAud] = useState(
-    "https://aasuperapp-test.xglstg00.ppc.bigpayme.com",
-  );
+  const [aud, setAud] = useState("");
   const [jti, setJti] = useState(uuidv4());
   const [iat, setIat] = useState(epochNow());
   const exp = iat + 3600;

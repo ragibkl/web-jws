@@ -24,7 +24,13 @@ function App() {
 
   const sign = async () => {
     const jws = signJWS(privateKey, header, payload);
-    setSignature(jws);
+    if (mode === "jws_sign_header") {
+      const parts = jws.split(".");
+      parts[1] = "";
+      setSignature(parts.join("."));
+    } else {
+      setSignature(jws);
+    }
   };
 
   const onChangeClientId: ChangeEventHandler<HTMLInputElement> = (e) => {
